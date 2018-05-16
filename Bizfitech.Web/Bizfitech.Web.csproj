@@ -216,7 +216,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBankConnector.cs" />
     <Compile Include="Interfaces\IUsersRepository.cs" />
+    <Compile Include="Models\OWBankConnection.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\UsersRepository.cs" />

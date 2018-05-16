@@ -12,11 +12,12 @@ using System.Web.Http;
 namespace Bizfitech.Web.Controllers
 {
     //[Authorize]
+    [RoutePrefix("api/transactions")]
     public class TransactionsController : ApiController
     {
         [HttpGet]
-        //[Route("api/users/transactions")]
-        public async Task<HttpResponseMessage> RetrieveUserTransactions(int accountNumber)
+        [Route("{accountNumber}/{type}")]
+        public async Task<HttpResponseMessage> RetrieveUserTransactions(int accountNumber, string type = "all")
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://fairwaybank-bizfitech.azurewebsites.net/");
@@ -33,7 +34,25 @@ namespace Bizfitech.Web.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var transactions = JsonConvert.DeserializeObject<List<TransactionViewModel>>(userTransactions);
-                    return Request.CreateResponse(HttpStatusCode.OK, transactions);
+
+                    if (type == "all")
+                    {
+                        return Request.CreateResponse(HttpStatusCode.OK, transactions);
+                    }
+                    else if (type == "Credit")
+                    {
+                        var creditTransactions = transactions.Where(x => x.Type == "Credit").ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, creditTransactions);
+                    }
+                    else if (type == "Debit")
+                    {
+                        var debitTransactions = transactions.Where(x => x.Type == "Debit").ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, debitTransactions);
+                    }
+                    else
+                    {
+                        return Request.CreateResponse(HttpStatusCode.NotFound);
+                    }
                 }
                 else
                 {
