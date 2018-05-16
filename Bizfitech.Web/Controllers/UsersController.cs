@@ -17,6 +17,7 @@ using System.Web.Http;
 namespace Bizfitech.Web.Controllers
 {
     //[Authorize]
+    [RoutePrefix("api/v1/users")]
     public class UsersController : ApiController
     {
         IUsersRepository _userRepository;
@@ -28,6 +29,8 @@ namespace Bizfitech.Web.Controllers
 
         // Add users via the API
         // POST api/users
+        [HttpPost]
+        [Route()]
         public void Post([FromBody]UserModel user)
         {
             var users = _userRepository.GetAllUsers();
@@ -47,13 +50,14 @@ namespace Bizfitech.Web.Controllers
 
         // Retrieve users via the API
         // GET api/users
+        [Route("all")]
         public IEnumerable<UserModel> Get()
         {
             return _userRepository.GetAllUsers();
         }
 
         [HttpGet]
-        //[Route("api/users/accounts")]
+        [Route("accounts/{accountNumber}")]
         public async Task<HttpResponseMessage> RetrieveUserAccountsAsync(int accountNumber)
         {
             HttpClient client = new HttpClient();

@@ -5,7 +5,7 @@ using NUnit.Framework;
 namespace Bizfitech.Tests
 {
     [TestFixture]
-    public class UserTests
+    public class UserControllerTests
     {
         [Test]
         public void UsersController_Get_ReturnsUsersIsNotNull()

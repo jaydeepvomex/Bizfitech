@@ -12,7 +12,7 @@ using System.Web.Http;
 namespace Bizfitech.Web.Controllers
 {
     //[Authorize]
-    [RoutePrefix("api/transactions")]
+    [RoutePrefix("api/v1/transactions")]
     public class TransactionsController : ApiController
     {
         [HttpGet]

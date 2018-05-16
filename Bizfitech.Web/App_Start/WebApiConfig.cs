@@ -14,11 +14,11 @@ namespace Bizfitech.Web
             // Web API routes
             config.MapHttpAttributeRoutes();
 
-            config.Routes.MapHttpRoute(
-                name: "User",
-                routeTemplate: "api/users/accounts/{accountNumber}",
-                defaults: new { controller = "users", id = RouteParameter.Optional }
-            );
+            //config.Routes.MapHttpRoute(
+            //    name: "User",
+            //    routeTemplate: "api/users/accounts/{accountNumber}",
+            //    defaults: new { controller = "users", id = RouteParameter.Optional }
+            //);
 
             //config.Routes.MapHttpRoute(
             //    name: "Transaction",
