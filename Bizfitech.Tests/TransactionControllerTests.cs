@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using Bizfitech.Web.Interfaces;
+using Moq;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,11 @@ namespace Bizfitech.Tests
     [TestFixture]
     public class TransactionControllerTests
     {
-        [Test]
-        public void TestMethod() {  }
+        [SetUp]
+        public void Setup()
+        {
+            var client = new Mock<IBaseHttpClient>(MockBehavior.Strict);
+            var transactionsController = new Mock<ITransactionController>(MockBehavior.Strict);
+        }
     }
 }

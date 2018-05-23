@@ -20,18 +20,20 @@ namespace Bizfitech.Web.Controllers
     [RoutePrefix("api/v1/users")]
     public class UsersController : ApiController
     {
-        IUsersRepository _userRepository;
+        private readonly IUsersRepository _userRepository;
+        private readonly IBaseHttpClient _baseHttpClient;
 
-        public UsersController(IUsersRepository userRepository)
+        public UsersController(IUsersRepository userRepository, IBaseHttpClient baseHttpClient)
         {
             _userRepository = userRepository;
+            _baseHttpClient = baseHttpClient;
         }
 
         // Add users via the API
         // POST api/users
         [HttpPost]
         [Route()]
-        public void Post([FromBody]UserModel user)
+        public HttpResponseMessage Post([FromBody]UserModel user)
         {
             var users = _userRepository.GetAllUsers();
 
@@ -40,11 +42,17 @@ namespace Bizfitech.Web.Controllers
             if (userExist)
             {
                 // return user already exist!
+                var error = new ErrorViewModel();
+                error.Message = "User already exist!";
+                error.Status = 0;
+                error.ErrorCode = 400;
+
+                return Request.CreateErrorResponse(HttpStatusCode.BadRequest, error.Message);
             }
             else
             {
                 _userRepository.AddUser(user);
-                // return Created("api/users/", user);
+                return Request.CreateResponse(HttpStatusCode.Created, user);
             }
         }
 
@@ -57,11 +65,13 @@ namespace Bizfitech.Web.Controllers
         }
 
         [HttpGet]
-        [Route("accounts/{accountNumber}")]
+        [Route("{accountNumber:int}/accounts")]
         public async Task<HttpResponseMessage> RetrieveUserAccountsAsync(int accountNumber)
         {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://fairwaybank-bizfitech.azurewebsites.net/");
+            HttpClient client = new HttpClient
+            {
+                BaseAddress = new Uri("http://fairwaybank-bizfitech.azurewebsites.net/")
+            };
 
             client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));

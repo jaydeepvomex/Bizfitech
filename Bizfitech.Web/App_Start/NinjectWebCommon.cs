@@ -14,6 +14,7 @@ namespace Bizfitech.Web.App_Start
     using Bizfitech.Web.Repository;
     using System.Web.Http;
     using WebApiContrib.IoC.Ninject;
+    using Bizfitech.Web.Core;
 
     public static class NinjectWebCommon 
     {
@@ -69,6 +70,8 @@ namespace Bizfitech.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IUsersRepository>().To<UsersRepository>();
+            kernel.Bind<ITransactionController>().To<ITransactionController>();
+            kernel.Bind<IBaseHttpClient>().To<BizfitechHttpClient>();
         }        
     }
 }

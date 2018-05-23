@@ -1,5 +1,8 @@
-﻿using Bizfitech.Web.ViewModels;
+﻿using Bizfitech.Web.Core;
+using Bizfitech.Web.Interfaces;
+using Bizfitech.Web.ViewModels;
 using Newtonsoft.Json;
+using Ninject;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,13 +16,22 @@ namespace Bizfitech.Web.Controllers
 {
     //[Authorize]
     [RoutePrefix("api/v1/transactions")]
-    public class TransactionsController : ApiController
+    public class TransactionsController : ApiController, ITransactionController
     {
+        private IBaseHttpClient _baseHttpClient;
+
+        public TransactionsController(IBaseHttpClient baseHttpClient)
+        {
+            _baseHttpClient = baseHttpClient;
+        }
+
         [HttpGet]
-        [Route("{accountNumber}/{type}")]
+        [Route("{accountNumber}/{type:alpha}")]
         public async Task<HttpResponseMessage> RetrieveUserTransactions(int accountNumber, string type = "all")
         {
-            HttpClient client = new HttpClient();
+            var kernel = new StandardKernel();
+            var client = kernel.Get<BizfitechHttpClient>().HttpClient();
+
             client.BaseAddress = new Uri("http://fairwaybank-bizfitech.azurewebsites.net/");
 
             client.DefaultRequestHeaders.Accept.Add(
@@ -39,12 +51,12 @@ namespace Bizfitech.Web.Controllers
                     {
                         return Request.CreateResponse(HttpStatusCode.OK, transactions);
                     }
-                    else if (type == "Credit")
+                    else if (string.Equals(type, "credit", StringComparison.OrdinalIgnoreCase))
                     {
                         var creditTransactions = transactions.Where(x => x.Type == "Credit").ToList();
                         return Request.CreateResponse(HttpStatusCode.OK, creditTransactions);
                     }
-                    else if (type == "Debit")
+                    else if (string.Equals(type, "debit", StringComparison.OrdinalIgnoreCase))
                     {
                         var debitTransactions = transactions.Where(x => x.Type == "Debit").ToList();
                         return Request.CreateResponse(HttpStatusCode.OK, debitTransactions);

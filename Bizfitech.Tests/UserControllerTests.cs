@@ -1,5 +1,6 @@
 ﻿using Bizfitech.Web.Controllers;
 using Bizfitech.Web.Repository;
+using Moq;
 using NUnit.Framework;
 
 namespace Bizfitech.Tests
@@ -7,6 +8,12 @@ namespace Bizfitech.Tests
     [TestFixture]
     public class UserControllerTests
     {
+        [SetUp]
+        public void Setup()
+        {
+            //var users = new Mock<IUsersController>(MockBehavior.Strict);  
+        }
+
         [Test]
         public void UsersController_Get_ReturnsUsersIsNotNull()
         {

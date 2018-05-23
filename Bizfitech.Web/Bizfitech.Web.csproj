@@ -213,10 +213,13 @@
     <Compile Include="Controllers\TransactionsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Core\BizfitechHttpClient.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IBankConnector.cs" />
+    <Compile Include="Interfaces\IBaseHttpClient.cs" />
+    <Compile Include="Interfaces\ITransactionController.cs" />
     <Compile Include="Interfaces\IUsersRepository.cs" />
     <Compile Include="Models\OWBankConnection.cs" />
     <Compile Include="Models\UserModel.cs" />
