@@ -9,6 +9,6 @@ namespace Bizfitech.Web.Interfaces
 {
     public interface ITransactionController
     {
-        Task<HttpResponseMessage> RetrieveUserTransactions(int accountNumber, string type);
+        Task<HttpResponseMessage> RetrieveUserTransactionsAsync(int accountNumber, string type);
     }
 }

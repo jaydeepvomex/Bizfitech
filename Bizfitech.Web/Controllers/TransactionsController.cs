@@ -27,19 +27,11 @@ namespace Bizfitech.Web.Controllers
 
         [HttpGet]
         [Route("{accountNumber}/{type:alpha}")]
-        public async Task<HttpResponseMessage> RetrieveUserTransactions(int accountNumber, string type = "all")
+        public async Task<HttpResponseMessage> RetrieveUserTransactionsAsync(int accountNumber, string type = "all")
         {
-            var kernel = new StandardKernel();
-            var client = kernel.Get<BizfitechHttpClient>().HttpClient();
+           var response = await _baseHttpClient.GetAsync("http://fairwaybank-bizfitech.azurewebsites.net/api/v1/accounts/" + accountNumber + "/transactions");
 
-            client.BaseAddress = new Uri("http://fairwaybank-bizfitech.azurewebsites.net/");
-
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = await client.GetAsync("api/v1/accounts/" + accountNumber + "/transactions");
-
-            var userTransactions = await response.Content.ReadAsStringAsync();
+           var userTransactions = await response.Content.ReadAsStringAsync();
 
             if (userTransactions != null)
             {

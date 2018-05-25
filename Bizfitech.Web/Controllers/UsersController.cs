@@ -68,17 +68,7 @@ namespace Bizfitech.Web.Controllers
         [Route("{accountNumber:int}/accounts")]
         public async Task<HttpResponseMessage> RetrieveUserAccountsAsync(int accountNumber)
         {
-            HttpClient client = new HttpClient
-            {
-                BaseAddress = new Uri("http://fairwaybank-bizfitech.azurewebsites.net/")
-            };
-
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
-
-            string uri = "api/v1/accounts/" + accountNumber;
-
-            HttpResponseMessage response = await client.GetAsync(uri);
+            var response = await _baseHttpClient.GetAsync("http://fairwaybank-bizfitech.azurewebsites.net/api/v1/accounts/" + accountNumber);
 
             string json = await response.Content.ReadAsStringAsync();
 
