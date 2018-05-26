@@ -23,3 +23,39 @@
         <p><a class="btn btn-default" href="/api/v1/transactions/12345678/debit" target="_blank">View Transactions</a></p>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-md-4">
+        <input type="text" placeholder="Enter the account number" id="txtAccountNumber"/>
+        <button id="btnTransactions" class="btn btn-sm btn-primary" type="button">Get transactions</button>
+    </div>
+    <div class="col-md-4">
+        <form id="transactionTypeRadioForm">
+            <input type="radio" id="allType" name="transactionType" value="all" checked> All<br>
+            <input type="radio" id="debitType" name="transactionType" value="debit"> Debit<br>
+            <input type="radio" id="creditType" name="transactionType" value="credit"> Credit
+        </form> 
+    </div>
+</div>
+
+<br/>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Transactions
+            </div>
+            <div class="panel-body">
+                <table class="table table-bordered" id="Table">
+                    <tr>
+                        <th>Transaction Information</th>
+                        <th>Amount</th>
+                        <th>Type</th>
+                        <th>Booked Date</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
