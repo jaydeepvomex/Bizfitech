@@ -30,10 +30,17 @@
         <button id="btnTransactions" class="btn btn-sm btn-primary" type="button">Get transactions</button>
     </div>
     <div class="col-md-4">
+        Select Transaction Type
         <form id="transactionTypeRadioForm">
-            <input type="radio" id="allType" name="transactionType" value="all" checked> All<br>
-            <input type="radio" id="debitType" name="transactionType" value="debit"> Debit<br>
-            <input type="radio" id="creditType" name="transactionType" value="credit"> Credit
+            <label class="radio-inline">
+                <input type="radio" id="allType" name="transactionType" value="all" checked> All<br>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" id="debitType" name="transactionType" value="debit"> Debit<br>
+            </label>
+            <label class="radio-inline">
+                <input type="radio" id="creditType" name="transactionType" value="credit"> Credit
+            </label>
         </form> 
     </div>
 </div>
